@@ -11,7 +11,7 @@
 |
 */
 
-use App\Contracts\Router;
+use App\Question;
 use App\Result;
 
 
@@ -25,6 +25,11 @@ Route::get('/auth', function () {
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('/test/{test}/', function (\App\Test $test) {
 		return view('test', ['test' => $test]);
+	});
+
+	Route::post('/test/{test}/', function ($test_id) {
+		$questions = Question::where('test', $test_id)->get();
+		return view('test_questions', ['questions' => $questions]);
 	});
 
 	Route::get('/result/{result}/', function (\App\Result $result) {
