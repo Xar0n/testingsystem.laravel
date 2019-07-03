@@ -5,7 +5,7 @@
     <div class="container">
         <h1 class="mt-3">Доступные тесты</h1>
         @foreach ($tests as $test)
-            <a class="mt-3 lead" href="/test/{{ $test->id }}">{{ $test->title }}</a>
+        <p><a class="mt-3 lead" href="/test/{{ $test->id }}">{{ $test->title }}</a></p>
         @endforeach
     </div>
 @endif
