@@ -11,9 +11,11 @@
 |
 */
 
+
 use App\Question;
 use App\Result;
-use App\Variant_Question;
+
+use Illuminate\Http\Request;
 
 
 Route::get('/auth', function () {
@@ -22,41 +24,43 @@ Route::get('/auth', function () {
 
 
 Route::group(['middleware' => 'auth'], function () {
-	Route::get('/test/{test}/', function (\App\Test $test) {
-		return view('test', ['test' => $test]);
-	});
 
-	Route::post('/test/{test}/', function ($test_id) {
-		$questions = Question::where('test', $test_id)->get();
-		$variants = [];
-		foreach ($questions as $question)
-		{
-			if ($question->type == 1)
-			{
-				$variants[$question->id] = Variant_Question::where('question', $question->id)->get();
-			}
-		}
-		return view('test_questions', ['questions' => $questions, 'variants' => $variants]);
-	});
+	Route::get('/', 'TestsController@index');
+
+	Route::get('/test/{test}/', 'TestsController@show');
+
+	Route::post('/test/{test}/', 'TestsController@run');
 
 	Route::get('/result/{result}/', function (\App\Result $result) {
 		return 'Результат теста';
 	});
 
-	Route::post('/result', function () {
-
+	Route::post('/result', function (Request $request) {
+		if ($request->isMethod('post')) {
+			$test_id = session('test.id');
+			Session::forget('test.id');
+			$questions = Question::where('test', '=', $test_id)->get();
+			$test = Test::findOrFail($test_id);
+			$points = 0;
+			$points_total = 0;
+			foreach ($questions as $question)
+			{
+				$points_total = $points_total + $question->points;
+				if ($question->true_answer == $request->input($question->id))
+				{
+					$points = $points + $question->points;
+				}
+			}
+			return view('result', ['points' => $points, 'points_total' => $points_total, 'test' => $test]);
+		}
 	});
 
 	Route::get('/profile', function () {
 		return view('profile');
 	});
 
-	Route::get('/', function () {
-		$tests = \App\Test::orderBy('id')->get();
-		return view('tests', ['tests' => $tests]);
-	});
+
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
