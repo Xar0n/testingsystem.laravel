@@ -6,5 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Result_Question extends Model
 {
-    //
+	public $timestamps = false;
+	protected $fillable = [
+		'result',
+		'question',
+		'answer',
+		'flag'
+	];
 }

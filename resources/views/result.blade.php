@@ -1,8 +1,8 @@
 @extends('layouts.app')
-@section('title', 'Результат №')
+@section('title', '<title>Результат теста</title>')
 @section('content')
 <div class="container">
-	<h1 class="mt-5">Результат №</h1>
-	<p class="mt-3 lead">Баллов:</p>
+    <p class="mt-3 lead">Тест {{ $test->title }} <h1 class="mt-5">
+	<p class="mt-3 lead">Ваш результат: {{ $points }} из {{ $points_total }}</p>
 </div>
 @endsection
