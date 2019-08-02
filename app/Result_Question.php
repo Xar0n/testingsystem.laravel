@@ -13,4 +13,8 @@ class Result_Question extends Model
 		'answer',
 		'flag'
 	];
+	public function result()
+	{
+		$this->belongsTo('App\Result');
+	}
 }

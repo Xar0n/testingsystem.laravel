@@ -12,10 +12,8 @@
 */
 
 
-
-
-
-
+//use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/auth', function () {
 	return view('auth');
@@ -28,7 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/test/{test}/', 'TestsController@show');
 
-	Route::post('/test/{test}/', 'TestsController@run');
+	Route::match(['get', 'post'],'/test/do/{test}/', 'TestsController@run');
 
 	Route::get('/result/{result}/', function (\App\Result $result) {
 		return 'Результат теста';
@@ -41,6 +39,10 @@ Route::group(['middleware' => 'auth'], function () {
 	});
 
 
+});
+
+Route::get('/admin_panel', function (){
+	return view('admin.index');
 });
 
 Auth::routes();

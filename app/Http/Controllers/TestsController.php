@@ -21,11 +21,17 @@ class TestsController extends Controller
 		if ($test->date <= Carbon::now()){
 			return view('test', ['test' => $test]);
 		}
-		else return 'Тест будет доступен:'.$test->date->year. ' '.$test->time;
+		else
+		{
+			$date = strtotime($test->date) - strtotime(Carbon::now());
+			return 'Тест будет доступен через: '.date('d:H:i:s ',$date);
+		}
+
 	}
 
 	public function run(Request $request, $test_id)
 	{
+		$test = Test::findOrFail($test_id);
 		$questions = Question::where('test', $test_id)->get();
 		$variants = [];
 		foreach ($questions as $question) {
@@ -34,6 +40,7 @@ class TestsController extends Controller
 			}
 		}
 		$request->session()->push('test.id', $test_id);
-		return view('test_questions', ['questions' => $questions, 'variants' => $variants]);
+		$date = (strtotime($test->date) + strtotime($test->time)) - strtotime(Carbon::now());
+		return view('test_questions', ['questions' => $questions, 'variants' => $variants, 'time' => $date]);
 	}
 }

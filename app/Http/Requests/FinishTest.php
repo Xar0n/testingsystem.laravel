@@ -24,7 +24,14 @@ class FinishTest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "answers.*" => "max:500",
         ];
     }
+
+    public function messages()
+	{
+		return [
+			"answers.*.max" => "Превышено допустимое количество символов в ответе"
+		];
+	}
 }

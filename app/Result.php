@@ -13,4 +13,10 @@ class Result extends Model
 		'result',
 		'date'
 	];
+
+	public function questions()
+	{
+
+		return $this->hasMany('App\Result_Question');
+	}
 }
