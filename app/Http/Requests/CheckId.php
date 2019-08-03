@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FinishTest extends FormRequest
+class CheckId extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class FinishTest extends FormRequest
      */
     public function authorize()
     {
-        return \Auth::check();
+        return true;
     }
 
     /**
@@ -24,14 +24,7 @@ class FinishTest extends FormRequest
     public function rules()
     {
         return [
-            "answers.*" => "max:500",
+            "id" => "required|max:10|min:1|integer",
         ];
     }
-
-    public function messages()
-	{
-		return [
-			"answers.*.max" => "Превышено допустимое количество символов в ответе"
-		];
-	}
 }

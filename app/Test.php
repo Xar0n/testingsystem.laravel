@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Test extends Model
 {
+	public $timestamps = false;
 	protected $fillable = [
 		'title',
 		'description',
-		'status',
 		'time',
 		'date'
 	];

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FinishTest extends FormRequest
+class CheckTest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class FinishTest extends FormRequest
      */
     public function authorize()
     {
-        return \Auth::check();
+        return true;
     }
 
     /**
@@ -24,14 +24,11 @@ class FinishTest extends FormRequest
     public function rules()
     {
         return [
-            "answers.*" => "max:500",
+            'title' => 'required|min:1|max:255',
+			'description' => 'min:1|max:1000',
+			'time' => 'required|date_format:"H:i"',
+			'date' => 'required|date',
+			'time_date' => 'required|date_format:"H:i"'
         ];
     }
-
-    public function messages()
-	{
-		return [
-			"answers.*.max" => "Превышено допустимое количество символов в ответе"
-		];
-	}
 }
