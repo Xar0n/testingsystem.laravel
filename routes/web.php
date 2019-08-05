@@ -33,7 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
 	});
 });
 
-Route::group(['prefix' => '/admin_panel'],function () {
+Route::group(['prefix' => '/admin_panel', 'middleware' => 'admin'],function () {
 	Route::get('/', function (){
 		return view('admin.index');
 	});
@@ -45,19 +45,17 @@ Route::group(['prefix' => '/admin_panel'],function () {
 	Route::group(['prefix' => '/tests'], function (){
 		Route::get('/', 'Admin\TestsController@showAll');
 		Route::post('/', 'Admin\TestsController@showOne');
-		Route::get('/add', function () {
-			return view('admin.add_test');
-		});
+		Route::get('/add', 'Admin\TestsController@showFormAdd');
 		Route::post('/add', 'Admin\TestsController@add');
 		Route::get('/delete/{test}/', 'Admin\TestsController@delete');
-		Route::get('/edit/{test}/', 'Admin\TestsController@edit');
+		Route::get('/edit/{test}/', 'Admin\TestsController@showFormEdit');
+		Route::post('/edit/{test}/', 'Admin\TestsController@edit');
 	});
 
 	Route::group(['prefix' => '/groups'], function (){
 
 	});
 });
-;
 
 Auth::routes();
 
