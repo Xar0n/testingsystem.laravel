@@ -34,10 +34,8 @@ class TestsController extends GeneralController
 	public function edit(CheckTest $request, $test_id)
 	{
 		$test = Test::findOrFail($test_id);
-		$test->title = $request->input('title');
+		$test->name = $request->input('title');
 		$test->description = $request->input('description');
-		$test->time = $request->input('time');
-		$test->date = $request->input('date').' '.$request->input('time_date').':00';
 		$test->save();
 		return redirect('/admin_panel/tests');
 	}
@@ -45,10 +43,8 @@ class TestsController extends GeneralController
 	public function add(CheckTest $request)
 	{
 		$test = new Test;
-		$test->title = $request->input('title');
+		$test->name = $request->input('title');
 		$test->description = $request->input('description');
-		$test->time = $request->input('time');
-		$test->date = $request->input('date').' '.$request->input('time_date').':00';
 		$test->save();
 		return view('admin.add_test');
 

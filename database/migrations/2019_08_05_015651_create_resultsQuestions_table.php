@@ -13,7 +13,7 @@ class CreateResultsQuestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('resultsQuestions', function (Blueprint $table) {
+        Schema::create('result__questions', function (Blueprint $table) {
             $table->unsignedInteger('result_id');
             $table->unsignedInteger('question_id');
             $table->string('answer', 1000);
@@ -28,6 +28,6 @@ class CreateResultsQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('resultsQuestions');
+        Schema::dropIfExists('result__questions');
     }
 }

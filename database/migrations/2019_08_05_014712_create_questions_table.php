@@ -20,7 +20,6 @@ class CreateQuestionsTable extends Migration
             $table->unsignedInteger('test_id');
             $table->tinyInteger('type');
             $table->tinyInteger('points');
-            $table->timestamps();
         });
     }
 

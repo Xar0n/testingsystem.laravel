@@ -13,10 +13,9 @@ class CreateVariantsQuestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('variantsQuestions', function (Blueprint $table) {
+        Schema::create('variant__questions', function (Blueprint $table) {
             $table->unsignedInteger('question_id');
             $table->string('description', '1000');
-            $table->timestamps();
         });
     }
 
@@ -27,6 +26,6 @@ class CreateVariantsQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('variantsQuestions');
+        Schema::dropIfExists('variant__questions');
     }
 }

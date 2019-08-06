@@ -11,7 +11,7 @@ class TestsController extends Controller
 {
     public function index()
 	{
-		$tests = \App\Test::orderBy('id')->get();
+		$tests = \App\Test::all();
 		return view('tests', ['tests' => $tests]);
 	}
 

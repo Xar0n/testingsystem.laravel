@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CheckTest extends FormRequest
+class CheckGroup extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class CheckTest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|min:1|max:255',
-			'description' => 'min:1|max:1000',
+            'name' => 'required|min:1|max:255'
         ];
     }
 }

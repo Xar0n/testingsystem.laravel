@@ -27,8 +27,7 @@
 				<tr>
 					<th scope="col">#</th>
 					<th scope="col">Название</th>
-					<th scope="col">Время выполнения</th>
-					<th scope="col">Дата проведения</th>
+					<th scope="col">Описание</th>
 					<th scope="col">Действия</th>
 				</tr>
 				</thead>
@@ -37,9 +36,8 @@
 				@foreach($tests as $test)
 					<tr>
 						<th scope="row">{{ $test->id }}</th>
-						<td>{{ $test->title }}</td>
-						<td>{{ $test->time }}</td>
-						<td>{{ $test->date }}</td>
+                        <td>{{ $test->name }}</td>
+                        <td>{{ $test->description }}</td>
 						<td>
 							<div class="btn-group" role="group">
 								<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -57,9 +55,8 @@
                 @elseif(isset($test))
                 <tr>
                     <th scope="row">{{ $test->id }}</th>
-                    <td>{{ $test->title }}</td>
-                    <td>{{ $test->time }}</td>
-                    <td>{{ $test->date }}</td>
+                    <td>{{ $test->name }}</td>
+                    <td>{{ $test->description }}</td>
                     <td>
                         <div class="btn-group" role="group">
                             <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

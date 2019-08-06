@@ -16,9 +16,9 @@ class RedirectIsAdmin
      */
     public function handle($request, Closure $next)
     {
-    	if($request->isMethod('post') and $request->has('name') and $request->has('password'))
+    	if($request->isMethod('post') and $request->has('login') and $request->has('password'))
 		{
-			$name = $request->input('name');
+			$name = $request->input('login');
 			$password = $request->input('password');
 			if(('Lalka228' === $name) and ('123456' === $password))
 			{

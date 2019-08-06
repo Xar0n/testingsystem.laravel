@@ -8,8 +8,8 @@ class Result extends Model
 {
 	public $timestamps = false;
 	protected $fillable = [
-		'test',
-		'user',
+		'test_id',
+		'user_id',
 		'result',
 		'date'
 	];

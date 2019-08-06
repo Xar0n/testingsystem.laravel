@@ -11,7 +11,6 @@
 |
 */
 
-
 //use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Route;
 
@@ -53,9 +52,21 @@ Route::group(['prefix' => '/admin_panel', 'middleware' => 'admin'],function () {
 	});
 
 	Route::group(['prefix' => '/groups'], function (){
-
+		Route::get('/', 'Admin\GroupsController@showAll');
+		Route::post('/', 'Admin\GroupsController@showOne');
+		Route::get('/add', 'Admin\GroupsController@showFormAdd');
+		Route::post('/add', 'Admin\GroupsController@add');
+		Route::get('/delete/{group}/', 'Admin\GroupsController@delete');
+		Route::get('/edit/{group}/', 'Admin\GroupsController@showFormEdit');
+		Route::post('/edit/{group}/', 'Admin\GroupsController@edit');
 	});
 });
 
-Auth::routes();
+Route::group(['middleware' => ['web']], function() {
+	Route::get('login', ['as' => 'login', 'uses' => 'Auth\LoginController@showLoginForm']);
+	Route::post('login', ['as' => 'login.post', 'uses' => 'Auth\LoginController@login']);
+	Route::post('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
+	Route::get('register', ['as' => 'register', 'uses' => 'Auth\RegisterController@showRegistrationForm']);
+	Route::post('register', ['as' => 'register.post', 'uses' => 'Auth\RegisterController@register']);
+});
 

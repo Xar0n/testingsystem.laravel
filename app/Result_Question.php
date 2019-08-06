@@ -8,8 +8,8 @@ class Result_Question extends Model
 {
 	public $timestamps = false;
 	protected $fillable = [
-		'result',
-		'question',
+		'result_id',
+		'question_id',
 		'answer',
 		'flag'
 	];

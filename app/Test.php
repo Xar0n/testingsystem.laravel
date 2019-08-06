@@ -8,16 +8,12 @@ class Test extends Model
 {
 	public $timestamps = false;
 	protected $fillable = [
-		'title',
+		'name',
 		'description',
-		'time',
-		'date'
 	];
 
-	protected $dates = ['date'];
-
-	public function scopePublished($query)
+	/*public function scopePublished($query)
 	{
 		$query->where('date', '<=', Carbon::now());
-	}
+	}*/
 }

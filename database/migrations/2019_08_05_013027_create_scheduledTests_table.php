@@ -13,14 +13,13 @@ class CreateScheduledTestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('scheduledTests', function (Blueprint $table) {
+        Schema::create('scheduled__tests', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('test_id');
             $table->unsignedInteger('group_id');
             $table->time('time');
             $table->dateTime('date_first');
             $table->dateTime('date_last');
-            $table->timestamps();
         });
     }
 
@@ -31,6 +30,6 @@ class CreateScheduledTestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('scheduledTests');
+        Schema::dropIfExists('scheduled__tests');
     }
 }
