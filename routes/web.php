@@ -59,6 +59,9 @@ Route::group(['prefix' => '/admin_panel', 'middleware' => 'admin'],function () {
 		Route::get('/delete/{group}/', 'Admin\GroupsController@delete');
 		Route::get('/edit/{group}/', 'Admin\GroupsController@showFormEdit');
 		Route::post('/edit/{group}/', 'Admin\GroupsController@edit');
+		Route::get('/scheduled_tests/{group}', 'Admin\GroupsController@showFormScheduledTests');
+		Route::get('/add_test', 'Admin\GroupsController@showFormAddTest');
+		Route::post('/add_test', 'Admin\GroupsController@addTest');
 	});
 });
 
