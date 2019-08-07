@@ -6,7 +6,6 @@ use App\Group;
 use App\Http\Requests\CheckId;
 use App\Http\Requests\CheckGroup;
 use App\Scheduled_Test;
-use App\Test;
 
 class GroupsController extends GeneralController
 {
@@ -19,27 +18,6 @@ class GroupsController extends GeneralController
 	{
 		$group = Group::findOrFail($group_id);
 		return view('admin.edit_group', ['group' => $group]);
-	}
-
-	public function showFormScheduledTests($group_id)
-	{
-		$tests = [];
-		$group = Group::findOrFail($group_id);
-		$scheduled_tests = Scheduled_Test::where('group_id', '=', $group_id)->get();
-		foreach ($scheduled_tests as $scheduled_test)
-		{
-			$test = Test::findOrFail($scheduled_test->test_id);
-			$test->time = $scheduled_test->time;
-			$test->date_first = $scheduled_test->date_first;
-			$test->date_last = $scheduled_test->date_last;
-			$tests[] = $test;
-		}
-		return view('admin.scheduled_tests', ['group' => $group, 'tests' => $tests]);
-	}
-
-	public function showFormAddTest()
-	{
-		return view('admin.add_test_group');
 	}
 
     public function showAll()
@@ -70,19 +48,15 @@ class GroupsController extends GeneralController
 		return view('admin.add_group');
 	}
 
-	public function addTest()
-	{
-
-	}
-
-	public function deleteTest()
-	{
-
-	}
-
 	public function delete($group_id) //ДОДЕЛАТЬ
 	{
 		$group = Group::findOrFail($group_id);
+		$tests_s = Scheduled_Test::where('group_id', '=', $group->id)->get();
+		foreach ($tests_s as $test_s)
+		{
+			$test_s->delete();
+		}
+		//$users = User
 		$group->delete();
 		return redirect('/admin_panel/groups');
 	}

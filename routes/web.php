@@ -32,7 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
 	});
 });
 
-Route::group(['prefix' => '/admin_panel', 'middleware' => 'admin'],function () {
+Route::group(['prefix' => '/admin_panel', 'middleware' => 'admin', 'namespace' => 'Admin'],function () {
 	Route::get('/', function (){
 		return view('admin.index');
 	});
@@ -42,34 +42,40 @@ Route::group(['prefix' => '/admin_panel', 'middleware' => 'admin'],function () {
 	});
 
 	Route::group(['prefix' => '/tests'], function (){
-		Route::get('/', 'Admin\TestsController@showAll');
-		Route::post('/', 'Admin\TestsController@showOne');
-		Route::get('/add', 'Admin\TestsController@showFormAdd');
-		Route::post('/add', 'Admin\TestsController@add');
-		Route::get('/delete/{test}/', 'Admin\TestsController@delete');
-		Route::get('/edit/{test}/', 'Admin\TestsController@showFormEdit');
-		Route::post('/edit/{test}/', 'Admin\TestsController@edit');
+		Route::get('/', 'TestsController@showAll');
+		Route::post('/', 'TestsController@showOne');
+		Route::get('/add', 'TestsController@showFormAdd');
+		Route::post('/add', 'TestsController@add');
+		Route::get('/delete/{test}/', 'TestsController@delete');
+		Route::get('/edit/{test}/', 'TestsController@showFormEdit');
+		Route::post('/edit/{test}/', 'TestsController@edit');
 	});
 
 	Route::group(['prefix' => '/groups'], function (){
-		Route::get('/', 'Admin\GroupsController@showAll');
-		Route::post('/', 'Admin\GroupsController@showOne');
-		Route::get('/add', 'Admin\GroupsController@showFormAdd');
-		Route::post('/add', 'Admin\GroupsController@add');
-		Route::get('/delete/{group}/', 'Admin\GroupsController@delete');
-		Route::get('/edit/{group}/', 'Admin\GroupsController@showFormEdit');
-		Route::post('/edit/{group}/', 'Admin\GroupsController@edit');
-		Route::get('/scheduled_tests/{group}', 'Admin\GroupsController@showFormScheduledTests');
-		Route::get('/add_test', 'Admin\GroupsController@showFormAddTest');
-		Route::post('/add_test', 'Admin\GroupsController@addTest');
+		Route::get('/', 'GroupsController@showAll');
+		Route::post('/', 'GroupsController@showOne');
+		Route::get('/add', 'GroupsController@showFormAdd');
+		Route::post('/add', 'GroupsController@add');
+		Route::get('/delete/{group}/', 'GroupsController@delete');
+		Route::get('/edit/{group}/', 'GroupsController@showFormEdit');
+		Route::post('/edit/{group}/', 'GroupsController@edit');
+		Route::group(['prefix' => '/scheduled_tests'], function (){
+			Route::get('/{group}/add/{test}', 'ScheduledTestController@showFormAdd');
+			Route::post('/{group}/add/{test}', 'ScheduledTestController@add');
+			Route::get('/edit/{test_s}', 'ScheduledTestController@showFormEdit');
+			Route::post('/edit/{test_s}', 'ScheduledTestController@edit');
+			Route::get('/delete/{test_s}', 'ScheduledTestController@delete');
+			Route::get('/{group}', 'ScheduledTestController@showAll');
+			Route::post('/{group}', 'ScheduledTestController@showOne');
+		});
 	});
 });
 
-Route::group(['middleware' => ['web']], function() {
-	Route::get('login', ['as' => 'login', 'uses' => 'Auth\LoginController@showLoginForm']);
-	Route::post('login', ['as' => 'login.post', 'uses' => 'Auth\LoginController@login']);
-	Route::post('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
-	Route::get('register', ['as' => 'register', 'uses' => 'Auth\RegisterController@showRegistrationForm']);
-	Route::post('register', ['as' => 'register.post', 'uses' => 'Auth\RegisterController@register']);
+Route::group(['middleware' => ['web'], 'namespace' => 'Auth'], function() {
+	Route::get('login', ['as' => 'login', 'uses' => 'LoginController@showLoginForm']);
+	Route::post('login', ['as' => 'login.post', 'uses' => 'LoginController@login']);
+	Route::post('logout', ['as' => 'logout', 'uses' => 'LoginController@logout']);
+	Route::get('register', ['as' => 'register', 'uses' => 'RegisterController@showRegistrationForm']);
+	Route::post('register', ['as' => 'register.post', 'uses' => 'RegisterController@register']);
 });
 

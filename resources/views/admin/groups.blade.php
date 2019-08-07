@@ -44,7 +44,6 @@
 							<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
 								<a class="dropdown-item" href="{{ url("/admin_panel/groups/edit/$group->id") }}">Редактировать</a>
                                 <a class="dropdown-item" href="{{ url("/admin_panel/groups/scheduled_tests/$group->id") }}">Показать тесты</a>
-								<a class="dropdown-item" href="{{ url("/admin_panel/groups/add_test/$group->id") }}">Добавить тест</a>
 								<a class="dropdown-item color-red" href="{{ url("/admin_panel/groups/delete/$group->id/") }}">Удалить</a>
 							</div>
 						</div>
@@ -63,7 +62,6 @@
 							<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
 								<a class="dropdown-item" href="{{ url("/admin_panel/groups/edit/$group->id") }}">Редактировать</a>
                                 <a class="dropdown-item" href="{{ url("/admin_panel/groups/scheduled_tests/$group->id") }}">Показать тесты</a>
-                                <a class="dropdown-item" href="{{ url("/admin_panel/groups/add_test/$group->id") }}">Добавить тест</a>
 								<a class="dropdown-item color-red" href="{{ url("/admin_panel/groups/delete/$group->id") }}">Удалить</a>
 							</div>
 						</div>
