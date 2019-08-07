@@ -45,7 +45,7 @@
 								</button>
 								<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
 									<a class="dropdown-item" href="{{ url("/admin_panel/tests/edit/$test->id/") }}">Редактировать</a>
-									<a class="dropdown-item" href="#">Добавить вопросы</a>
+									<a id="{{ $test->id }}" class="dropdown-item questions_add" data-toggle="modal" data-target="#exampleModal" href="#exampleModal" title="{{$test->name}}">Добавить вопросы</a>
 									<a class="dropdown-item color-red" href="{{ url("/admin_panel/tests/delete/$test->id/") }}">Удалить</a>
 								</div>
 							</div>
@@ -64,7 +64,7 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                 <a class="dropdown-item" href="{{ url("/admin_panel/edit/$test->id") }}">Редактировать</a>
-                                <a class="dropdown-item" href="#">Добавить вопросы</a>
+                                <a id="{{ $test->id }}" class="dropdown-item questions_add" data-toggle="modal" data-target="#exampleModal" href="#exampleModal" title="{{$test->name}}">Добавить вопросы</a>
                                 <a class="dropdown-item color-red" href="{{ url("/admin_panel/delete/$test->id") }}">Удалить</a>
                             </div>
                         </div>
@@ -75,10 +75,69 @@
                         Тесты отстствуют
                     </div>
                 @endif
-
 				</tbody>
 			</table>
 		</div>
 	</div>
+</div>
+<script>
+    $(".questions_add").bind('click',function(event){
+        event.preventDefault();
+        test_id = $(this).attr('id');
+        title = $(this).attr('title');
+        document.getElementById("test_id").setAttribute('action', '{{ url('/admin_panel/tests/questions/add_form/') }}'+'/'+test_id);
+        document.getElementById("test_title").innerHTML = title;
+    });
+
+    function toggle_visibility(id) {
+        var e = document.getElementById(id);
+        e.style.display = '';
+    }
+    function toggle_unvisibility(id) {
+        var e = document.getElementById(id);
+        e.style.display = 'none';
+    }
+</script>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                </h5 class="modal-title" id="exampleModalLabel">Добавить вопросы к тесту: <el id="test_title"></el></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="test_id"  method="post">
+                    {{ csrf_field() }}
+                    <div class="row form-group">
+                        <div class="col col-md-5"><label for="text-input2" class=" form-control-label">Количество вопросов</label></div>
+                        <div class="col-5 col-md-7"><input type="text" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '')" id="text-input2"  class="form-control" name="count" placeholder="Введите количество вопросов" value="1"></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-4"><label class=" form-control-label">Тип вопросов</label></div>
+                        <div class="col col-md-8">
+                            <div class="form-check-inline form-check">
+                                <label for="text" class="form-check-label form-check-inline">
+                                    <input type="radio" id="text" name="type" value="1" class="form-check-input" onclick="toggle_unvisibility('count_variants');" checked>Текстовый
+                                </label>
+                                <label for="variant" class="form-check-label form-check-inline">
+                                    <input type="radio" id="variant" name="type" value="2" class="form-check-input" onclick="toggle_visibility('count_variants');" >Вариативный
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group" id="count_variants" style="display: none">
+                        <div class="col col-md-6"><label for="text-input2" class=" form-control-label">Количество вариантов</label></div>
+                        <div class="col-5 col-md-6"><input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^2-9]/g, '')" id="text-input2"  class="form-control" name="count_variants" placeholder="Введите количество вариантов" value="2"></div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button type="submit" class="btn btn-primary">Добавить</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

@@ -42,6 +42,9 @@ Route::group(['prefix' => '/admin_panel', 'middleware' => 'admin', 'namespace' =
 	});
 
 	Route::group(['prefix' => '/tests'], function (){
+		Route::group(['prefix' => '/questions'], function () {
+			Route::post('/add_form/{test}', 'QuestionsController@showForm');
+		});
 		Route::get('/', 'TestsController@showAll');
 		Route::post('/', 'TestsController@showOne');
 		Route::get('/add', 'TestsController@showFormAdd');
