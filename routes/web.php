@@ -13,6 +13,7 @@
 
 //use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 Route::get('/auth', function () {
 	return view('auth');
@@ -44,6 +45,8 @@ Route::group(['prefix' => '/admin_panel', 'middleware' => 'admin', 'namespace' =
 	Route::group(['prefix' => '/tests'], function (){
 		Route::group(['prefix' => '/questions'], function () {
 			Route::post('/add_form/{test}', 'QuestionsController@showForm');
+			Route::post('/add/{test}', 'QuestionsController@add');
+			Route::get('/{test}', 'QuestionsController@showAll');
 		});
 		Route::get('/', 'TestsController@showAll');
 		Route::post('/', 'TestsController@showOne');

@@ -44,6 +44,7 @@
 									Выберите действие
 								</button>
 								<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <a class="dropdown-item" href="{{ url("/admin_panel/tests/questions/$test->id/") }}">Посмотреть вопросы</a>
 									<a class="dropdown-item" href="{{ url("/admin_panel/tests/edit/$test->id/") }}">Редактировать</a>
 									<a id="{{ $test->id }}" class="dropdown-item questions_add" data-toggle="modal" data-target="#exampleModal" href="#exampleModal" title="{{$test->name}}">Добавить вопросы</a>
 									<a class="dropdown-item color-red" href="{{ url("/admin_panel/tests/delete/$test->id/") }}">Удалить</a>
@@ -63,6 +64,7 @@
                                 Выберите действие
                             </button>
                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                <a class="dropdown-item" href="{{ url("/admin_panel/tests/questions/$test->id/") }}">Посмотреть вопросы</a>
                                 <a class="dropdown-item" href="{{ url("/admin_panel/edit/$test->id") }}">Редактировать</a>
                                 <a id="{{ $test->id }}" class="dropdown-item questions_add" data-toggle="modal" data-target="#exampleModal" href="#exampleModal" title="{{$test->name}}">Добавить вопросы</a>
                                 <a class="dropdown-item color-red" href="{{ url("/admin_panel/delete/$test->id") }}">Удалить</a>
