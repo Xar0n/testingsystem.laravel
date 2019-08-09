@@ -14,14 +14,14 @@
 		</ul>
 		@endif
 		<div class="card-header">
-			<strong>Просмотр теста: {{ $test->name }}</strong>
+			<strong>Просмотр вопросов теста: {{ $test->name }}</strong>
 		</div>
 		<div class="card-body card-block">
-            {{ csrf_field() }}
+            @if(isset($questions[0]))
             @foreach($questions as $question)
             <?php $i++ ?>
             <div class="row form-group">
-                <div class="col-lg-4">
+                <div class="col-lg-12">
                     <p>Вопрос {{ $i }}: {{ $question->description }}</p>
                     @if($question->type == 2)
                         <ol class="list-group">
@@ -33,11 +33,24 @@
                         </ol>
                     @endif
                     <p>Ответ: {{ $question->true_answer }}</p>
-                    <a href="{{ url("/admin_panel/tests/questions/edit/$question->id") }}" class="btn btn-success btn-block">Редактировать</a>
+                    <div class="row form-group">
+                        <div class="col-lg-4">
+                            <a href="{{ url("/admin_panel/tests/questions/edit/$question->id") }}" class="btn btn-success btn-block">Редактировать</a>
+                        </div>
+                        <div class="col-lg-4">
+                            <a href="{{ url("/admin_panel/tests/questions/delete/$question->id") }}" class="btn btn-danger btn-block">Удалить</a>
+                        </div>
+                    </div>
+                    </div>
                 </div>
-            </div>
             <hr>
             @endforeach
+            @else
+            <div class="alert alert-danger" role="alert">
+                Вопросы для данного теста отстутствуют
+            </div>
+            @endif
+        </div>
 	</div>
 </div>
 @endsection

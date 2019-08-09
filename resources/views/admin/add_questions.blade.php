@@ -10,7 +10,7 @@
 		</ul>
 		@endif
 		<div class="card-header">
-			<strong>Добавление вопросов к тесту: {{ $test->name }} {{$type}}</strong>
+			<strong>Добавление вопросов к тесту: {{ $test->name }}</strong>
 		</div>
 		<div class="card-body card-block">
 			<form action="{{ url("/admin_panel/tests/questions/add/$test->id") }}" method="post" class="form-horizontal">

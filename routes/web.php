@@ -47,6 +47,9 @@ Route::group(['prefix' => '/admin_panel', 'middleware' => 'admin', 'namespace' =
 			Route::post('/add_form/{test}', 'QuestionsController@showForm');
 			Route::post('/add/{test}', 'QuestionsController@add');
 			Route::get('/{test}', 'QuestionsController@showAll');
+			Route::get('/edit/{question}', 'QuestionsController@showFormEdit');
+			Route::post('/edit/{question}', 'QuestionsController@edit');
+			Route::get('/delete/{question}', 'QuestionsController@delete');
 		});
 		Route::get('/', 'TestsController@showAll');
 		Route::post('/', 'TestsController@showOne');

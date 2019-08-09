@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CheckQuestion;
 use App\Http\Requests\CheckQuestionForm;
 use App\Http\Requests\CheckQuestions;
 use App\Question;
@@ -38,14 +39,12 @@ class QuestionsController extends Controller
 	{
 		$test = Test::findOrFail($test_id);
 		$type = false;
-		if($request->input('type') == 2)
-		{
+		if ($request->input('type') == 2) {
 			$v = Validator::make($request->all(), [
 				"variant.*.*" => "required|min:1|max:1000",
 			]);
 
-			if ($v->fails())
-			{
+			if ($v->fails()) {
 				return redirect('/admin_panel/tests')->withErrors($v->errors());
 			}
 			$type = true;
@@ -53,29 +52,25 @@ class QuestionsController extends Controller
 		}
 		$questions = $request->input('question');
 		$answers = $request->input('answer');
-		if (count($questions) != count($answers))
-		{
+		if (count($questions) != count($answers)) {
 			abort('404');
 		}
 		//Проверку бы на ключи сделать, да лень. И так сойдет:)
 		$count = count($questions);
-		for($i = 1; $i <= $count; $i++) {
+		for ($i = 1; $i <= $count; $i++) {
 			$question = new Question;
 			$question->description = $questions[$i];
 			$question->true_answer = $answers[$i];
 			$question->test_id = $test->id;
 			if (!$type) {
 				$question->type = 1;
-			} else{
+			} else {
 				$question->type = 2;
 			}
 			$question->save();
-			var_dump($question->id);
-			if($type)
-			{
+			if ($type) {
 				foreach ($variants as $variant) {
-					foreach ($variant as $v)
-					{
+					foreach ($variant as $v) {
 						$var = new Variant_Question;
 						$var->question_id = $question->id;
 						$var->description = $v;
@@ -84,20 +79,68 @@ class QuestionsController extends Controller
 				}
 			}
 		}
-		return redirect("/admin_panel/questions/$test->id");
+		return redirect("/admin_panel/tests/questions/$test->id");
 	}
 
-	public function edit($question_id)
+	public function showFormEdit($question_id)
 	{
+		$variants = [];
+		$question = Question::findOrFail($question_id);
+		$test = Test::findOrFail($question->test_id);
+		if($question->type == 2)
+		{
+			$variants = Variant_Question::where('question_id', $question->id)->get();
+		}
 
+		return view('admin.edit_question', ['question' => $question, 'test' => $test, 'variants' => $variants]);
+	}
+
+	public function edit(CheckQuestion $request, $question_id)
+	{
+		$type = false;
+		$question = Question::findOrFail($question_id);
+		if ($question->type == 2) { //Можно выделить в один метод, но мне сново лень:D
+			$v = Validator::make($request->all(), [
+				"variant.*" => "required|min:1|max:1000",
+			]);
+
+			if ($v->fails()) {
+				return redirect()->back()->withErrors($v->errors());
+			}
+			$type = true;
+			$variants = $request->input('variant');
+		}
+		$question->description = $request->input('question');
+		$question->true_answer = $request->input('answer');
+		$question->save();
+		if($type)
+		{
+			$vars = Variant_Question::where('question_id', $question->id)->get();
+			if (count($vars) != count($variants)) abort(404);
+			$i = 0;
+			foreach ($vars as $var)
+			{
+				$i++;
+				$var->description = $variants[$i];
+				$var->save();
+			}
+		}
+		return redirect("/admin_panel/tests/questions/$question->test_id");
 	}
 
 	public function delete($question_id)
 	{
-
+		$question = Question::findOrFail($question_id);
+		if($question->type == 2)
+		{
+			$variants = Variant_Question::where('question_id', $question->id)->get();
+			foreach ($variants as $variant)
+			{
+				$variant->delete();
+			}
+		}
+		$test_id = $question->test_id;
+		$question->delete();
+		return redirect("/admin_panel/tests/questions/$test_id");
 	}
-
-
-
-
 }
