@@ -39,7 +39,13 @@ Route::group(['prefix' => '/admin_panel', 'middleware' => 'admin', 'namespace' =
 	});
 
 	Route::group(['prefix' => '/users'], function (){
-
+		Route::get('/', 'UsersController@showAll');
+		Route::post('/', 'UsersController@showOne');
+		Route::get('/add', 'UsersController@showFormAdd');
+		Route::post('/add', 'UsersController@add');
+		Route::get('/delete/{test}/', 'UsersController@delete');
+		Route::get('/edit/{test}/', 'UsersController@showFormEdit');
+		Route::post('/edit/{test}/', 'UsersController@edit');
 	});
 
 	Route::group(['prefix' => '/tests'], function (){

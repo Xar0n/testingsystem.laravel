@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\CheckId;
-use App\Http\Requests\GeneralRequest;
 use App\Http\Controllers\Controller;
 
 abstract class GeneralController extends Controller
