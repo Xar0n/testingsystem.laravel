@@ -18,7 +18,7 @@
 				{{ csrf_field() }}
 				<div class="form-group  mb-2">
 					<label for="inputPassword2" class="sr-only">Введите id пользователя</label>
-					<input type="text" name="id" class="form-control" id="inputPassword2" placeholder="Введите id группы">
+					<input type="text" name="id" class="form-control" id="inputPassword2" placeholder="Введите id пользователя">
 				</div>
 				<button type="submit" class="btn btn-primary mb-2">Найти</button>
 			</form>
@@ -47,7 +47,7 @@
 					<td>{{ $user->name }}</td>
 					<td>{{ $user->patronymic }}</td>
 					<td>{{ $user->city }}</td>
-					<td>{{ $groups[$user->group_id]->name }}</td>
+					<td>{{ $user->group_id }}</td>
 					<td>
 						<div class="btn-group" role="group">
 							<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -71,7 +71,7 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->patronymic }}</td>
                     <td>{{ $user->city }}</td>
-                    <td>{{ $groups[$user->group_id]->name }}</td>
+                    <td>{{ $user->group_id }}</td>
                     <td>
 						<div class="btn-group" role="group">
 							<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

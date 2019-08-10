@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Requests\CheckUser;
 use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -27,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/admin_panel/users/add';
 
     /**
      * Create a new controller instance.
@@ -36,7 +37,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('admin');
     }
 
     /**
@@ -45,14 +46,16 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'login' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
-    }
+
+	public function register(CheckUser $request)
+	{
+		event(new Registered($user = $this->create($request->all())));
+
+		$this->guard()->login($user);
+
+		return $this->registered($request, $user)
+			?: redirect($this->redirectPath());
+	}
 
     /**
      * Create a new user instance after a valid registration.
@@ -66,6 +69,11 @@ class RegisterController extends Controller
             'login' => $data['login'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+			'name' => $data['name'],
+			'surname' => $data['surname'],
+			'patronymic' => $data['patronymic'],
+			'city' => $data['city'],
+			'group_id' => $data['group_id'],
         ]);
     }
 }

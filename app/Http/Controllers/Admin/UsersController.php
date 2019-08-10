@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Group;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Requests\CheckEditUser;
 use App\Http\Requests\CheckId;
 use App\Http\Requests\CheckUser;
 use App\User;
@@ -25,24 +27,33 @@ class UsersController extends GeneralController
 
 	public function showFormAdd()
 	{
-		return view('admin.add_user');
+		$groups = Group::all();
+		return view('admin.add_user', ['groups' => $groups]);
 	}
 
 	public function showFormEdit($user_id)
 	{
 		$user = User::findOrFail($user_id);
-		$group = Group::findOrFail($user->id);
-		return view('admin.edit_user', ['user' => $user, 'group' => $group]);
+		$groups = Group::all();
+		return view('admin.edit_user', ['user' => $user, 'groups' => $groups]);
 	}
 
 	public function add(CheckUser $request)
 	{
-
+		$register = new RegisterController;
+		$register->register($request);
+		return redirect('/admin_panel/users/add');
 	}
 
-	public function edit(CheckUser $request, $user_id)
+	public function edit(CheckEditUser $request, $user_id)
 	{
-
+		$user = User::findOrFail($user_id);
+		$user->name = $request->input('name');
+		$user->surname = $request->input('surname');
+		$user->patronymic = $request->input('patronymic');
+		$user->group_id = $request->input('group_id');
+		$user->save();
+		return redirect('/admin_panel/users');
 	}
 
 	public function delete($user_id)

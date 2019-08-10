@@ -90,7 +90,5 @@ Route::group(['middleware' => ['web'], 'namespace' => 'Auth'], function() {
 	Route::get('login', ['as' => 'login', 'uses' => 'LoginController@showLoginForm']);
 	Route::post('login', ['as' => 'login.post', 'uses' => 'LoginController@login']);
 	Route::post('logout', ['as' => 'logout', 'uses' => 'LoginController@logout']);
-	Route::get('register', ['as' => 'register', 'uses' => 'RegisterController@showRegistrationForm']);
-	Route::post('register', ['as' => 'register.post', 'uses' => 'RegisterController@register']);
 });
 
