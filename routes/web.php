@@ -21,16 +21,23 @@ Route::get('/auth', function () {
 
 
 Route::group(['middleware' => 'auth'], function () {
-	Route::get('/', 'TestsController@index');
-	Route::get('/test/{test}/', 'TestsController@show');
-	Route::match(['get', 'post'],'/test/do/{test}/', 'TestsController@run');
+	Route::group(['middleware' => 'deleteTestSId'], function () {
+		Route::get('/', 'TestsController@index');
+		Route::get('/profile', function () {
+			return view('profile');
+		});
+	});
+	Route::group(['middleware' => 'allowTest'], function () {
+		Route::get('/test/{test_s}/', 'TestsController@show');
+		Route::match(['get', 'post'],'/test/do/{test_s}/', 'TestsController@run');
+		Route::post('/result', 'ResultsController@index');
+	});
+
 	Route::get('/result/{result}/', function (\App\Result $result) {
 		return 'Результат теста';
 	});
-	Route::post('/result', 'ResultsController@index');
-	Route::get('/profile', function () {
-		return view('profile');
-	});
+
+
 });
 
 Route::group(['prefix' => '/admin_panel', 'middleware' => 'admin', 'namespace' => 'Admin'],function () {
