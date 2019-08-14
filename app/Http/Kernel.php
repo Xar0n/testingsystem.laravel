@@ -54,7 +54,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
 		'redirectAdmin' => \App\Http\Middleware\RedirectIsAdmin::class,
 		'admin' => \App\Http\Middleware\HasAdmin::class,
-		'runTest' => \App\Http\Middleware\RunTest::class,
 		'allowTest' => \App\Http\Middleware\AllowTest::class,
 		'deleteTestSId' =>\App\Http\Middleware\DeleteTestSId::class,
     ];

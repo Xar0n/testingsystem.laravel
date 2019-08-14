@@ -10,6 +10,7 @@
     @endif
     <!--<p class="mt-3 lead">Оставшееся время: </p>-->
     <p class="mt-3 lead">Текущее время: {{ Carbon\Carbon::now() }}</p>
+    <p class="mt-3 lead">Оставшееся время: {{ $time }}</p>
     <hr>
     <div class="col-sm-5">
 	<form action="{{ url('/result') }}" method="post">

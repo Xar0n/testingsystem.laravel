@@ -19,7 +19,6 @@ Route::get('/auth', function () {
 	return view('auth');
 });
 
-
 Route::group(['middleware' => 'auth'], function () {
 	Route::group(['middleware' => 'deleteTestSId'], function () {
 		Route::get('/', 'TestsController@index');
@@ -30,14 +29,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::group(['middleware' => 'allowTest'], function () {
 		Route::get('/test/{test_s}/', 'TestsController@show');
 		Route::match(['get', 'post'],'/test/do/{test_s}/', 'TestsController@run');
-		Route::post('/result', 'ResultsController@index');
 	});
-
+	Route::post('/result', 'ResultsController@index');
 	Route::get('/result/{result}/', function (\App\Result $result) {
 		return 'Результат теста';
 	});
-
-
 });
 
 Route::group(['prefix' => '/admin_panel', 'middleware' => 'admin', 'namespace' => 'Admin'],function () {

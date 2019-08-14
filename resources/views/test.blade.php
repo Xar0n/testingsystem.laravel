@@ -1,5 +1,5 @@
 @extends('layouts.layout')
-@section('title', '<title>Тест</title>')
+@section('title', "Тест: $test->name")
 @section('content')
 	<div class="container">
 		<h1 class="mt-5">{{ $test->name }}</h1>
