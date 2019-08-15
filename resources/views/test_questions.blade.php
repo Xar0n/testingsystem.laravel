@@ -1,5 +1,5 @@
 @extends('layouts.layout')
-@section('title', 'Выполнение теста')
+@section('title', "Выполнение теста: $test->name")
 @section('content')
 <script type="text/javascript">
     function startTimer(duration, display) {

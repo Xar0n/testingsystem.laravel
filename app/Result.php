@@ -8,9 +8,9 @@ class Result extends Model
 {
 	public $timestamps = false;
 	protected $fillable = [
-		'test_id',
+		'scheduled_test_id',
 		'user_id',
-		'result',
+		'points',
 		'date'
 	];
 
