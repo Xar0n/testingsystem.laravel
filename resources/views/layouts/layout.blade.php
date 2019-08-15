@@ -6,6 +6,7 @@
     <link href="{{ url('/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>.bd-placeholder-img {font-size: 1.125rem;text-anchor: middle;}@media (min-width: 768px) {.bd-placeholder-img-lg {font-size: 3.5rem;}}main > .container {padding: 60px 15px 0;}.footer {background-color: #f5f5f5;}.footer > .container {padding-right: 15px;padding-left: 15px;}code {font-size: 80%;}
     </style>
+    <script type="text/javascript" src="{{ asset('/js/jquery.js') }}"></script>
 </head>
 <body class="d-flex flex-column h-100">
 <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
