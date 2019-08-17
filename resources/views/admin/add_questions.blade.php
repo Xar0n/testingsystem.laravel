@@ -26,7 +26,7 @@
                             @endif
                                     <div class="col-md-6 mb-3">
                                     <label for="question{{ $i }}_variant{{ $j }}">Вариант {{ $j }}</label>
-                                    <input type="text" class="form-control" id="question{{ $i }}_variant{{ $j }}" placeholder="Вариант {{ $j }}" name="variant[{{ $i }}][{{ $j }}]"  required>
+                                    <input type="text" class="form-control" id="question{{ $i }}_variant{{ $j }}" placeholder="Вариант {{ $j }}" name="variant[{{ $i }}][{{ $j }}]" value="{{ old("variant.$i.$j") }}"  required>
                                     </div>
                                     @if($j % 2 == 0)
                                 </div>
@@ -35,7 +35,7 @@
                     @endif
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="answer{{ $i }}" class=" form-control-label">Ответ</label></div>
-                    <div class="col-12 col-md-9"><input type="text" id="answer{{ $i }}" name="answer[{{ $i }}]" placeholder="Введите ответ" class="form-control" required></div>
+                    <div class="col-12 col-md-9"><input type="text" id="answer{{ $i }}" name="answer[{{ $i }}]" placeholder="Введите ответ" class="form-control" value="{{ old("answer.$question->id") }}" required></div>
                 </div>
                     <hr>
                 @endfor

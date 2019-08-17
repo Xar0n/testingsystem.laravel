@@ -18,11 +18,11 @@
                 {{ csrf_field() }}
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Название</label></div>
-                    <div class="col-12 col-md-9"><input type="text" id="text-input" name="title" placeholder="Введите название теста" class="form-control"></div>
+                    <div class="col-12 col-md-9"><input type="text" id="text-input" name="title" placeholder="Введите название теста" class="form-control" value="{{ old('title') }}"></div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="textarea-input" class=" form-control-label">Описание</label></div>
-                    <div class="col-12 col-md-9"><textarea name="description" id="textarea-input" rows="9" placeholder="Введите описание теста" class="form-control"></textarea></div>
+                    <div class="col-12 col-md-9"><textarea name="description" id="textarea-input" rows="9" placeholder="Введите описание теста" class="form-control">{{ old('name') }}"</textarea></div>
                 </div>
                 <div class="col-lg-4">
                     <button type="submit" class="btn btn-success btn-block">Добавить</button>

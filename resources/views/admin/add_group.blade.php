@@ -18,8 +18,10 @@
 				{{ csrf_field() }}
 				<div class="row form-group">
 					<div class="col col-md-3"><label for="text-input" class=" form-control-label">Название</label></div>
-					<div class="col-12 col-md-9"><input type="text" id="text-input" name="name" placeholder="Введите название группы" class="form-control"></div>
-				</div>
+					<div class="col-12 col-md-9">
+                        <input type="text" id="text-input" name="name" placeholder="Введите название группы" class="form-control" value="{{ old('name') }}">
+                    </div>
+                </div>
 				<div class="col-lg-4">
 					<button type="submit" class="btn btn-success btn-block">Добавить</button>
 				</div>

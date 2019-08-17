@@ -15,7 +15,7 @@
             seconds = seconds < 10 ? "0" + seconds : seconds;
             display.textContent = minutes + ":" + seconds;
             if (diff <= 0) {
-                start = Date.now() + 1000; //Здесь можно поставить отправку формы
+                document.formAnswers.submit();
             }
         };
         timer();
@@ -38,7 +38,7 @@
     <p class="mt-3 lead">Текущее время: {{ Carbon\Carbon::now() }}</p>
     <hr>
     <div class="col-sm-5">
-	<form action="{{ url('/result') }}" method="post">
+	<form action="{{ url('/result') }}" method="post" id="formAnswers" name="formAnswers">
 		{{ csrf_field() }}
         <?php $j = 1 ?>
 		@foreach ($questions as $question)
@@ -56,7 +56,7 @@
                 </fieldset>
             @endif
 			@if ($question->type == 1)
-                <input type="text" class="form-control" name="answers[{{ $question->id }}]" id="formGroupExampleInput">
+                <input type="text" class="form-control" name="answers[{{ $question->id }}]" id="formGroupExampleInput" value="{{ old("answers.$question->id") }}">
 			@endif
             <hr>
         <?php $j++ ?>
