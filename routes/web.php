@@ -37,10 +37,10 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::group(['prefix' => '/admin_panel', 'middleware' => 'admin', 'namespace' => 'Admin'],function () {
-	Route::get('/', function (){
-		return view('admin.index');
-	});
-
+	Route::get('/', 'ResultsController@showForm');
+	Route::get('/show/{group}', 'ResultsController@showFormGroup');
+	Route::post('/show/{group}', 'ResultsController@showResults');
+	Route::post('/get_tests', 'ResultsController@getScheduledTests');
 	Route::group(['prefix' => '/users'], function (){
 		Route::get('/', 'UsersController@showAll');
 		Route::post('/', 'UsersController@showOne');

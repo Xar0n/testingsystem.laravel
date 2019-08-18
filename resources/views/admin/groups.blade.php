@@ -42,6 +42,7 @@
 								Выберите действие
 							</button>
 							<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                <a class="dropdown-item show_results" data-toggle="modal" data-target="#showResults" href="#showResults" title="{{ $group->name }}" id="{{ $group->id }}" onclick="ajax(<?php echo '"_token='.csrf_token().', group_id='.$group->id."\""?>)">Посмотреть результаты</a>
 								<a class="dropdown-item" href="{{ url("/admin_panel/groups/edit/$group->id") }}">Редактировать</a>
                                 <a class="dropdown-item" href="{{ url("/admin_panel/groups/scheduled_tests/$group->id") }}">Показать тесты</a>
 								<a class="dropdown-item color-red" href="{{ url("/admin_panel/groups/delete/$group->id/") }}">Удалить</a>
@@ -60,6 +61,7 @@
 								Выберите действие
 							</button>
 							<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                <a class="dropdown-item show_results" id="{{ $group->id }}" href="{{ url("/admin_panel/show/$group->id") }}">Посмотреть результаты</a>
 								<a class="dropdown-item" href="{{ url("/admin_panel/groups/edit/$group->id") }}">Редактировать</a>
                                 <a class="dropdown-item" href="{{ url("/admin_panel/groups/scheduled_tests/$group->id") }}">Показать тесты</a>
 								<a class="dropdown-item color-red" href="{{ url("/admin_panel/groups/delete/$group->id") }}">Удалить</a>
@@ -77,5 +79,56 @@
 			</table>
 		</div>
 	</div>
+</div>
+<script>
+    function ajax(data) {
+        $.ajax({
+            type: "POST",
+            url:  "{{ url('/admin_panel/get_tests') }}",
+            data: data,
+            success: function (data) {
+                alert(data);
+            }
+        });
+    }
+    $(".show_results").bind('click',function(event){
+        event.preventDefault();
+        group_id = $(this).attr('id');
+        title = $(this).attr('title');
+        data = "_token={{ csrf_token() }}, group_id="+group_id;
+        ajax(data);
+        //document.getElementById("test_id").setAttribute('action', '{{ url('/admin_panel/tests/questions/add_form/') }}'+'/'+test_id);
+        document.getElementById("group_title").innerHTML = title;
+
+    });
+</script>
+<div class="modal fade" id="showResults" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                </h5 class="modal-title" id="exampleModalLabel">Посмотреть результаты группы: <el id="group_title"></el></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="test_id"  method="post">
+                    {{ csrf_field() }}
+                    <div class="row form-group" id="count_variants">
+                        <div class="col-6 col-md-9">
+                            <select name="select" id="select" class="form-control">
+                                <option selected>Выберите тест</option>
+                                <option value="">feefeffe</option>
+                            </select>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button type="submit" class="btn btn-primary">Посмотреть результаты</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

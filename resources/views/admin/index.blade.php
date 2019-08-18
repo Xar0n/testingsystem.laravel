@@ -7,109 +7,80 @@
 	<div class="orders">
 		<div class="row">
 			<div class="col-xl-12">
-				<div class="card">
-					<div class="card-body">
-						<h4 class="box-title">Orders </h4>
-					</div>
-					<div class="card-body--">
-						<div class="table-stats order-table ov-h">
-							<table class="table ">
-								<thead>
-								<tr>
-									<th class="serial">#</th>
-									<th class="avatar">Avatar</th>
-									<th>ID</th>
-									<th>Name</th>
-									<th>Product</th>
-									<th>Quantity</th>
-									<th>Status</th>
-								</tr>
-								</thead>
-								<tbody>
-								<tr>
-									<td class="serial">1.</td>
-									<td class="avatar">
-										<div class="round-img">
-											<a href="#"><img class="rounded-circle" src="images/avatar/1.jpg" alt=""></a>
-										</div>
-									</td>
-									<td> #5469 </td>
-									<td>  <span class="name">Louis Stanley</span> </td>
-									<td> <span class="product">iMax</span> </td>
-									<td><span class="count">231</span></td>
-									<td>
-										<span class="badge badge-complete">Complete</span>
-									</td>
-								</tr>
-								<tr>
-									<td class="serial">2.</td>
-									<td class="avatar">
-										<div class="round-img">
-											<a href="#"><img class="rounded-circle" src="images/avatar/2.jpg" alt=""></a>
-										</div>
-									</td>
-									<td> #5468 </td>
-									<td>  <span class="name">Gregory Dixon</span> </td>
-									<td> <span class="product">iPad</span> </td>
-									<td><span class="count">250</span></td>
-									<td>
-										<span class="badge badge-complete">Complete</span>
-									</td>
-								</tr>
-								<tr>
-									<td class="serial">3.</td>
-									<td class="avatar">
-										<div class="round-img">
-											<a href="#"><img class="rounded-circle" src="images/avatar/3.jpg" alt=""></a>
-										</div>
-									</td>
-									<td> #5467 </td>
-									<td>  <span class="name">Catherine Dixon</span> </td>
-									<td> <span class="product">SSD</span> </td>
-									<td><span class="count">250</span></td>
-									<td>
-										<span class="badge badge-complete">Complete</span>
-									</td>
-								</tr>
-								<tr>
-									<td class="serial">4.</td>
-									<td class="avatar">
-										<div class="round-img">
-											<a href="#"><img class="rounded-circle" src="images/avatar/4.jpg" alt=""></a>
-										</div>
-									</td>
-									<td> #5466 </td>
-									<td>  <span class="name">Mary Silva</span> </td>
-									<td> <span class="product">Magic Mouse</span> </td>
-									<td><span class="count">250</span></td>
-									<td>
-										<span class="badge badge-pending">Pending</span>
-									</td>
-								</tr>
-								<tr class=" pb-0">
-									<td class="serial">5.</td>
-									<td class="avatar pb-0">
-										<div class="round-img">
-											<a href="#"><img class="rounded-circle" src="images/avatar/6.jpg" alt=""></a>
-										</div>
-									</td>
-									<td> #5465 </td>
-									<td>  <span class="name">Johnny Stephens</span> </td>
-									<td> <span class="product">Monitor</span> </td>
-									<td><span class="count">250</span></td>
-									<td>
-										<span class="badge badge-complete">Complete</span>
-									</td>
-								</tr>
-								</tbody>
-							</table>
-						</div> <!-- /.table-stats -->
-					</div>
-				</div> <!-- /.card -->
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">Результаты</strong>
+                    </div>
+                    <div class="card-body">
+                        <form class="form-inline" method="post" action="{{ url('/admin_panel/results') }}">
+                            {{ csrf_field() }}
+                            <div class="form-result  mb-2">
+                                <label for="inputPassword2" class="sr-only">Введите id результата</label>
+                                <input type="text" name="id" class="form-control" id="inputPassword2" placeholder="Введите id результата">
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2">Найти</button>
+                        </form>
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Пользователь</th>
+                                <th scope="col">Дата</th>
+                                <th scope="col">Тест</th>
+                                <th scope="col">Баллы</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @if(isset($results))
+                            @foreach($results as $result)
+                            <tr>
+                                <th scope="row">{{ $result->id }}</th>
+                                <td>{{ $result->name }}</td>
+                                <td>
+                                    <div class="btn-result" role="result">
+                                        <button id="btnresultDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Выберите действие
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="btnresultDrop1">
+                                            <a class="dropdown-item" href="{{ url("/admin_panel/results/edit/$result->id") }}">Редактировать</a>
+                                            <a class="dropdown-item" href="{{ url("/admin_panel/results/scheduled_tests/$result->id") }}">Показать тесты</a>
+                                            <a class="dropdown-item color-red" href="{{ url("/admin_panel/results/delete/$result->id/") }}">Удалить</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                            @elseif(isset($result))
+                            <tr>
+                                <th scope="row">{{ $result->id }}</th>
+                                <td>{{ $result->name }}</td>
+                                <td>
+                                    <div class="btn-result" role="result">
+                                        <button id="btnresultDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Выберите действие
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="btnresultDrop1">
+                                            <a class="dropdown-item" href="{{ url("/admin_panel/results/edit/$result->id") }}">Редактировать</a>
+                                            <a class="dropdown-item" href="{{ url("/admin_panel/results/scheduled_tests/$result->id") }}">Показать тесты</a>
+                                            <a class="dropdown-item color-red" href="{{ url("/admin_panel/results/delete/$result->id") }}">Удалить</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            @else
+                            <div class="alert alert-danger" role="alert">
+                                Результаты отстствуют
+                            </div>
+                            @endif
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 			</div>  <!-- /.col-lg-8 -->
 		</div>
 	</div>
 	<!-- /.orders -->
 </div>
-<!-- .animated -->
+
 @endsection
