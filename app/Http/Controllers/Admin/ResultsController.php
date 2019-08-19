@@ -4,12 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Group;
 use App\Http\Requests\CheckId;
+use App\Performed_Test;
 use App\Result;
+use App\Result_Question;
 use App\Scheduled_Test;
 use App\Http\Controllers\Controller;
 use App\Test;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
 class ResultsController extends Controller
 {
@@ -19,30 +23,38 @@ class ResultsController extends Controller
 		return view('admin.index', ['groups' => $groups]);
 	}
 
-	public function showFormGroup($group_id)
+	public function showResults(CheckId $request)
 	{
-		$group = Group::findOrFail($group_id);
-		$tests_s = Scheduled_Test::where('group_id', $group_id)->get();
-		foreach ($tests_s as $test_s)
+		$scheduled_test = Scheduled_Test::findOrFail($request->input('id'));
+		$results = Result::where('scheduled_test_id', $scheduled_test->id)->get();
+		$test = Test::findOrFail($scheduled_test->test_id);
+		$group = Group::findOrFail($scheduled_test->group_id);
+		foreach ($results as $result)
 		{
-			$test = Test::findOrFail($test_s->test_id);
-			$test_s->name = $test->name;
+			$user = User::findOrFail($result->user_id);
+			$result->user_login = $user->login;
 		}
-		return view('admin.results', ['group' => $group, 'tests_s' => $tests_s]);
+		return view('admin.results', ['results' => $results, 'test' => $test, 'group' => $group]);
 	}
 
-	public function showResults(CheckId $test_s_id, $group_id)
+	public function showResult($result_id)
 	{
+		$result = Result::findOrFail($result_id);
+		$result_questions = Result_Question::where('result_id', $result->id)->get();
+		return view('admin.show_result', ['result' => $result,'result_questions' => $result_questions]);
+	}
+
+	public function getScheduledTests()
+	{
+		$group_id = Input::get('group');
 		$group = Group::findOrFail($group_id);
-		$test_s = Scheduled_Test::findOrFail($test_s_id);
-		$results = Result::where([['user_id', Auth::user()->id], ['scheduled_test_id', $test_s->id]])->get();
-		return view('admin.show_results');
-	}
-
-	public function getScheduledTests(Request $request)
-	{
-		$group_id = $request->input('group_id');
-		return $group_id;
+		$scheduled_tests = Scheduled_Test::where('group_id', $group->id)->get();
+		foreach ($scheduled_tests as $scheduled_test)
+		{
+			$test = Test::findOrFail($scheduled_test->test_id);
+			$scheduled_test->name = $test->name;
+		}
+		return json_encode($scheduled_tests);
 	}
 
 	public function getResults()
@@ -55,8 +67,18 @@ class ResultsController extends Controller
 
 	}
 
-	public function delete()
+	public function delete($result_id)
 	{
-
+		$result = Result::findOrFail($result_id);
+		$scheduled_test_id = $result->scheduled_test_id;
+		$performed_test = Performed_Test::where([['user_id', $result->user_id], ['scheduled_test_id', $scheduled_test_id]]);
+		$result_questions = Result_Question::where('result_id', $result->id)->get();
+		foreach ($result_questions as $result_question)
+		{
+			$result_question->delete();
+		}
+		$result->delete();
+		$performed_test->delete();
+		return redirect()->to('/admin_panel/groups');
 	}
 }

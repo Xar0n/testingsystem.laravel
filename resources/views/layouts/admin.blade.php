@@ -7,10 +7,7 @@
 	@include('layouts.panel.head');
 </head>
 <body>
-<!-- Left Panel -->
     @include('layouts.panel.sidebar');
-<!-- /#left-panel -->
-<!-- Right Panel -->
     <div id="right-panel" class="right-panel">
     @include('layouts.panel.header')
     <div class="content">

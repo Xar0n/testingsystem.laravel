@@ -15,10 +15,6 @@
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-Route::get('/auth', function () {
-	return view('auth');
-});
-
 Route::group(['middleware' => 'auth'], function () {
 	Route::group(['middleware' => 'deleteTestSId'], function () {
 		Route::get('/', 'TestsController@index');
@@ -38,9 +34,13 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::group(['prefix' => '/admin_panel', 'middleware' => 'admin', 'namespace' => 'Admin'],function () {
 	Route::get('/', 'ResultsController@showForm');
-	Route::get('/show/{group}', 'ResultsController@showFormGroup');
-	Route::post('/show/{group}', 'ResultsController@showResults');
-	Route::post('/get_tests', 'ResultsController@getScheduledTests');
+	Route::get('/get_tests', 'ResultsController@getScheduledTests');
+	Route::match(['get', 'post'], '/results', 'ResultsController@showResults');
+	Route::group(['prefix' => '/results'], function () {
+		Route::get('/delete/{result}', 'ResultsController@delete');
+		Route::get('/show/{result}');
+	});
+
 	Route::group(['prefix' => '/users'], function (){
 		Route::get('/', 'UsersController@showAll');
 		Route::post('/', 'UsersController@showOne');

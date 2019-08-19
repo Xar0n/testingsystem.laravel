@@ -1,32 +1,57 @@
 @extends('layouts.admin')
 @section('content')
-<!-- Animated -->
-<div class="animated fadeIn">
-	<div class="clearfix"></div>
-	<!-- Orders -->
-	<div class="orders">
-		<div class="row">
-			<div class="col-xl-12">
-						<form class="form-inline" method="post" action="{{ url('/admin_panel/results') }}">
-							{{ csrf_field() }}
-							<div class="row form-group">
-								<div class="col col-md-3"><label for="select" class=" form-control-label">Выберите тест</label></div>
-								<div class="col-12 col-md-9">
-									<select name="select" id="select" class="form-control">
-										<option selected>Тест</option>
-										@foreach ($tests_s as $test_s)
-											<option value="{{$test_s->id}}">{{ $test_s->name }}</option>
-										@endforeach
-									</select>
-                                    <button type="submit" class="btn btn-primary mb-2">Найти</button>
-								</div>
-
-							</div>
-
-						</form>
-				</div>
-			</div>
-		</div>
-	</div>
+<div class="col-lg-12">
+    @if ($errors->any())
+    <ul class="alert alert-danger">
+        @foreach ($errors->all() as $error)
+        <li>{{$error}}</li>
+        @endforeach
+    </ul>
+    @endif
+    <div class="card">
+        <div class="card-header">
+            <strong class="card-title">Результаты группы: {{ $group->name }}. Теста: {{ $test->name  }}</strong>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Пользователь</th>
+                    <th scope="col">Дата</th>
+                    <th scope="col">Баллы</th>
+                    <th scope="col">Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if(isset($results))
+                @foreach($results as $result)
+                <tr>
+                    <th scope="row">{{ $result->id }}</th>
+                    <td>{{ $result->user_login }}</td>
+                    <td>{{ $result->date }}</td>
+                    <td>{{ $result->points }}</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Выберите действие
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                <a class="dropdown-item" href="{{ url("/admin_panel/results/show/$result->id") }}">Просмотр ответов</a>
+                                <a class="dropdown-item" href="{{ url("/admin_panel/results/delete/$result->id") }}">Удалить</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+                @else
+                <div class="alert alert-danger" role="alert">
+                    Результаты отстствуют
+                </div>
+                @endif
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 @endsection

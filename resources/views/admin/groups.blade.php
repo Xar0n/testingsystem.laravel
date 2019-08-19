@@ -42,7 +42,7 @@
 								Выберите действие
 							</button>
 							<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                <a class="dropdown-item show_results" data-toggle="modal" data-target="#showResults" href="#showResults" title="{{ $group->name }}" id="{{ $group->id }}" onclick="ajax(<?php echo '"_token='.csrf_token().', group_id='.$group->id."\""?>)">Посмотреть результаты</a>
+                                <a class="dropdown-item show_results" data-toggle="modal" data-target="#showResults" href="#showResults" title="{{ $group->name }}" id="{{ $group->id }}">Посмотреть результаты</a>
 								<a class="dropdown-item" href="{{ url("/admin_panel/groups/edit/$group->id") }}">Редактировать</a>
                                 <a class="dropdown-item" href="{{ url("/admin_panel/groups/scheduled_tests/$group->id") }}">Показать тесты</a>
 								<a class="dropdown-item color-red" href="{{ url("/admin_panel/groups/delete/$group->id/") }}">Удалить</a>
@@ -83,11 +83,15 @@
 <script>
     function ajax(data) {
         $.ajax({
-            type: "POST",
+            type: "GET",
             url:  "{{ url('/admin_panel/get_tests') }}",
             data: data,
             success: function (data) {
-                alert(data);
+                arr = JSON.parse(data);
+                $('#tests_s').html('');
+                $(arr).each(function(index, item) {
+                    $('#tests_s').append('<option value="'+ item.id +'">' + item.name + '</option>');
+                });
             }
         });
     }
@@ -95,9 +99,8 @@
         event.preventDefault();
         group_id = $(this).attr('id');
         title = $(this).attr('title');
-        data = "_token={{ csrf_token() }}, group_id="+group_id;
+        data = {group: group_id};
         ajax(data);
-        //document.getElementById("test_id").setAttribute('action', '{{ url('/admin_panel/tests/questions/add_form/') }}'+'/'+test_id);
         document.getElementById("group_title").innerHTML = title;
 
     });
@@ -112,13 +115,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="test_id"  method="post">
+                <form id="test_id"  method="post" action="{{url('/admin_panel/results')}}">
                     {{ csrf_field() }}
                     <div class="row form-group" id="count_variants">
+                        <div class="col col-md-3"><label for="select" class=" form-control-label">Выберите тест</label></div>
                         <div class="col-6 col-md-9">
-                            <select name="select" id="select" class="form-control">
-                                <option selected>Выберите тест</option>
-                                <option value="">feefeffe</option>
+                            <select id="tests_s" name="id" id="select" class="form-control">
                             </select>
                         </div>
                     </div>
