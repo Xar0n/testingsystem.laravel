@@ -21,7 +21,7 @@ class TestsController extends GeneralController
 
     public function showAll()
 	{
-		$tests = Test::all();
+		$tests = Test::orderBy('id', 'desc')->get();
 		return view('admin.tests', ['tests' => $tests]);
 	}
 
@@ -37,7 +37,7 @@ class TestsController extends GeneralController
 		$test->name = $request->input('title');
 		$test->description = $request->input('description');
 		$test->save();
-		return redirect('/admin_panel/tests');
+		return redirect()->back();
 	}
 
 	public function add(CheckTest $request)
@@ -54,6 +54,6 @@ class TestsController extends GeneralController
 	{
 		$test = Test::findOrFail($test_id);
 		$test->delete();
-		return redirect('/admin_panel/tests');
+		return redirect()->back();
 	}
 }

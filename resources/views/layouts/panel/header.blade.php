@@ -12,9 +12,13 @@
                    Login
                 </a>
                 <div class="user-menu dropdown-menu">
-                    <a class="nav-link" href="#"><i class="fa fa-power -off"></i>Выход</a>
+
+                    <a class="nav-link" href="{{ url('/logout') }}"
+                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                        </i>Выход</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
+                        {{ csrf_field() }}
                     </form>
                 </div>
             </div>

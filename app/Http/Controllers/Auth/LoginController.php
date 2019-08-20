@@ -43,6 +43,13 @@ class LoginController extends Controller
 		return 'login';
 	}
 
+	protected function attemptLogin(Request $request)
+	{
+		return $this->guard()->attempt(
+			$this->credentials($request), true
+		);
+	}
+
 	public function showLoginForm()
 	{
 		return view('auth');

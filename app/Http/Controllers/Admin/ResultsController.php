@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Group;
 use App\Http\Requests\CheckId;
 use App\Performed_Test;
+use App\Question;
 use App\Result;
 use App\Result_Question;
 use App\Scheduled_Test;
@@ -26,7 +27,7 @@ class ResultsController extends Controller
 	public function showResults(CheckId $request)
 	{
 		$scheduled_test = Scheduled_Test::findOrFail($request->input('id'));
-		$results = Result::where('scheduled_test_id', $scheduled_test->id)->get();
+		$results = Result::where('scheduled_test_id', $scheduled_test->id)->orderBy('points', 'desc')->get();
 		$test = Test::findOrFail($scheduled_test->test_id);
 		$group = Group::findOrFail($scheduled_test->group_id);
 		foreach ($results as $result)
@@ -39,9 +40,21 @@ class ResultsController extends Controller
 
 	public function showResult($result_id)
 	{
+		$keys = [];
+		$values = [];
 		$result = Result::findOrFail($result_id);
+		$s_test = Scheduled_Test::findOrFail($result->scheduled_test_id);
+		$test = Test::findOrFail($s_test->test_id);
+		$user =  User::findOrFail($result->user_id);
 		$result_questions = Result_Question::where('result_id', $result->id)->get();
-		return view('admin.show_result', ['result' => $result,'result_questions' => $result_questions]);
+		$questions = Question::where('test_id', $test->id)->get();
+		foreach ($result_questions as $result_question)
+		{
+			$keys[] = $result_question->question_id;
+			$values[] = $result_question;
+		}
+		$result_questions = array_combine($keys, $values);
+		return view('admin.show_result', ['result' => $result,'result_questions' => $result_questions, 'user' => $user, 'test' => $test, 'questions' => $questions]);
 	}
 
 	public function getScheduledTests()

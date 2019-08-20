@@ -38,7 +38,7 @@ Route::group(['prefix' => '/admin_panel', 'middleware' => 'admin', 'namespace' =
 	Route::match(['get', 'post'], '/results', 'ResultsController@showResults');
 	Route::group(['prefix' => '/results'], function () {
 		Route::get('/delete/{result}', 'ResultsController@delete');
-		Route::get('/show/{result}');
+		Route::get('/show/{result}', 'ResultsController@showResult');
 	});
 
 	Route::group(['prefix' => '/users'], function (){
@@ -73,6 +73,7 @@ Route::group(['prefix' => '/admin_panel', 'middleware' => 'admin', 'namespace' =
 		Route::get('/', 'GroupsController@showAll');
 		Route::post('/', 'GroupsController@showOne');
 		Route::get('/add', 'GroupsController@showFormAdd');
+		Route::get('/show/{group}', 'GroupsController@showUsers');
 		Route::post('/add', 'GroupsController@add');
 		Route::get('/delete/{group}/', 'GroupsController@delete');
 		Route::get('/edit/{group}/', 'GroupsController@showFormEdit');

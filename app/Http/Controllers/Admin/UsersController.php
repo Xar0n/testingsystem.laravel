@@ -53,13 +53,13 @@ class UsersController extends GeneralController
 		$user->patronymic = $request->input('patronymic');
 		$user->group_id = $request->input('group_id');
 		$user->save();
-		return redirect('/admin_panel/users');
+		return redirect()->back();
 	}
 
 	public function delete($user_id)
 	{
 		$user = User::findOrFail($user_id);
 		$user->delete();
-		return redirect('/admin_panel/users');
+		return redirect()->back();
 	}
 }

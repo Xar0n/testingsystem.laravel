@@ -6,6 +6,7 @@ use App\Group;
 use App\Http\Requests\CheckId;
 use App\Http\Requests\CheckGroup;
 use App\Scheduled_Test;
+use App\User;
 
 class GroupsController extends GeneralController
 {
@@ -30,6 +31,13 @@ class GroupsController extends GeneralController
 	{
 		$group = Group::find($request->input('id'));
 		return view('admin.groups', ['group' => $group]);
+	}
+
+	public function showUsers($group_id)
+	{
+		$group = Group::findOrFail($group_id);
+		$users = User::where('group_id', $group->id)->get();
+		return view('admin.show_group_users', ['group' => $group, 'users' => $users]);
 	}
 
 	public function edit(CheckGroup $request, $group_id)

@@ -24,7 +24,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @if(isset($results))
+                @if(isset($results[0]))
                 @foreach($results as $result)
                 <tr>
                     <th scope="row">{{ $result->id }}</th>
