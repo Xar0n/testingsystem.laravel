@@ -19,7 +19,9 @@ class HasAdmin
 		{
 			$name = $request->session()->get('admin.name')[0];
 			$password = $request->get('admin.password')[0];
-			if('Lalka228' != $name and '123456' != $password)
+			$admin_name = env('ADMIN_NAME');
+			$admin_password = env('ADMIN_PASSWORD');
+			if($admin_name !== $name and $admin_password !== $password)
 			{
 				return abort('404');
 			}

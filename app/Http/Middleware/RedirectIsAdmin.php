@@ -20,7 +20,9 @@ class RedirectIsAdmin
 		{
 			$name = $request->input('login');
 			$password = $request->input('password');
-			if(('Lalka228' === $name) and ('123456' === $password))
+			$admin_name = env('ADMIN_NAME');
+			$admin_password = env('ADMIN_PASSWORD');
+			if(($admin_name === $name) and ($admin_password === $password))
 			{
 				$request->session()->push('admin.name', $name);
 				$request->session()->push('admin.password', $password);
