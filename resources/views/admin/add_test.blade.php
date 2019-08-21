@@ -22,7 +22,7 @@
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="textarea-input" class=" form-control-label">Описание</label></div>
-                    <div class="col-12 col-md-9"><textarea name="description" id="textarea-input" rows="9" placeholder="Введите описание теста" class="form-control">{{ old('name') }}"</textarea></div>
+                    <div class="col-12 col-md-9"><textarea name="description" id="textarea-input" rows="9" placeholder="Введите описание теста" class="form-control">{{ old('name') }}</textarea></div>
                 </div>
                 <div class="col-lg-4">
                     <button type="submit" class="btn btn-success btn-block">Добавить</button>
