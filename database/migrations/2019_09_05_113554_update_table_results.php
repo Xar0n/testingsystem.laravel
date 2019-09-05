@@ -14,10 +14,8 @@ class UpdateTableResults extends Migration
     public function up()
     {
         Schema::table('results', function (Blueprint $table) {
-            $table->dropColumn('result');
-            $table->dropColumn('test_id');
-            $table->unsignedInteger('scheduled_test_id');
-			$table->unsignedInteger('points');
+			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+			$table->foreign('scheduled_test_id')->references('id')->on('scheduled__tests')->onDelete('cascade');
         });
     }
 
@@ -29,7 +27,8 @@ class UpdateTableResults extends Migration
     public function down()
     {
         Schema::table('results', function (Blueprint $table) {
-            //
+			$table->dropForeign('results_user_id_foreign');
+			$table->dropForeign('results_scheduled_test_id_foreign	');
         });
     }
 }

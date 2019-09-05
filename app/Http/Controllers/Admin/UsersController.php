@@ -58,8 +58,7 @@ class UsersController extends GeneralController
 
 	public function delete($user_id)
 	{
-		$user = User::findOrFail($user_id);
-		$user->delete();
+		User::destroy($user_id);
 		return redirect()->back();
 	}
 }

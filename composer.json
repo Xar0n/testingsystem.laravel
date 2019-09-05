@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "Xar0n/testingsystem.laravel",
+    "description": "Test System",
+    "keywords": ["test", "test system"],
     "license": "MIT",
     "type": "project",
     "require": {

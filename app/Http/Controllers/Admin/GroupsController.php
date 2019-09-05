@@ -56,16 +56,9 @@ class GroupsController extends GeneralController
 		return view('admin.add_group');
 	}
 
-	public function delete($group_id) //ДОДЕЛАТЬ
+	public function delete($group_id)
 	{
-		$group = Group::findOrFail($group_id);
-		$tests_s = Scheduled_Test::where('group_id', '=', $group->id)->get();
-		foreach ($tests_s as $test_s)
-		{
-			$test_s->delete();
-		}
-		//$users = User
-		$group->delete();
+		Group::destroy($group_id);
 		return redirect('/admin_panel/groups');
 	}
 }

@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
 class Result_Question extends Model
 {
 	public $timestamps = false;
@@ -15,6 +14,6 @@ class Result_Question extends Model
 	];
 	public function result()
 	{
-		$this->belongsTo('App\Result');
+		$this->hasOne('App\Result');
 	}
 }

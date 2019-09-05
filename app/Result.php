@@ -16,7 +16,6 @@ class Result extends Model
 
 	public function questions()
 	{
-
 		return $this->hasMany('App\Result_Question');
 	}
 }

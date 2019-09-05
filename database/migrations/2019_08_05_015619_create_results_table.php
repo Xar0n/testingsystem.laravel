@@ -15,9 +15,9 @@ class CreateResultsTable extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('test_id');
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('result');
+			$table->unsignedInteger('scheduled_test_id');
+			$table->unsignedInteger('points');
             $table->dateTime('date');
         });
     }

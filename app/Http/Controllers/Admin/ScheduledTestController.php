@@ -85,9 +85,7 @@ class ScheduledTestController extends Controller
 
 	public function delete($scheduled_id)
 	{
-		$test_s = Scheduled_Test::findOrFail($scheduled_id);
-		$group_id = $test_s->group_id;
-		$test_s->delete();
-		return redirect("/admin_panel/groups/scheduled_tests/$group_id");
+		Scheduled_Test::destroy($scheduled_id);
+		return redirect()->back();
 	}
 }

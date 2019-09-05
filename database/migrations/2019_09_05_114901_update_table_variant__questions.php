@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateTableResultQuestions extends Migration
+class UpdateTableVariantQuestions extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class UpdateTableResultQuestions extends Migration
      */
     public function up()
     {
-        Schema::table('result__questions', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::table('variant__questions', function (Blueprint $table) {
+			$table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
         });
     }
 
@@ -25,8 +25,8 @@ class UpdateTableResultQuestions extends Migration
      */
     public function down()
     {
-        Schema::table('result__questions', function (Blueprint $table) {
-            //
+        Schema::table('variant__questions', function (Blueprint $table) {
+            $table->dropForeign('variant__questions_question_id_foreign');
         });
     }
 }

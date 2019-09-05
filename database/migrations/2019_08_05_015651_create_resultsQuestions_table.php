@@ -14,6 +14,7 @@ class CreateResultsQuestionsTable extends Migration
     public function up()
     {
         Schema::create('result__questions', function (Blueprint $table) {
+			$table->increments('id');
             $table->unsignedInteger('result_id');
             $table->unsignedInteger('question_id');
             $table->string('answer', 1000);

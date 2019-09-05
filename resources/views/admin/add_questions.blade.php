@@ -35,7 +35,7 @@
                     @endif
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="answer{{ $i }}" class=" form-control-label">Ответ</label></div>
-                    <div class="col-12 col-md-9"><input type="text" id="answer{{ $i }}" name="answer[{{ $i }}]" placeholder="Введите ответ" class="form-control" value="{{ old("answer.$question->id") }}" required></div>
+                    <div class="col-12 col-md-9"><input type="text" id="answer{{ $i }}" name="answer[{{ $i }}]" placeholder="Введите ответ" class="form-control" value="{{ old("answer.question->id") }}" required></div>
                 </div>
                     <hr>
                 @endfor

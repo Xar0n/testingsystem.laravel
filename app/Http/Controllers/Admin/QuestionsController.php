@@ -69,13 +69,11 @@ class QuestionsController extends Controller
 			}
 			$question->save();
 			if ($type) {
-				foreach ($variants as $variant) {
-					foreach ($variant as $v) {
-						$var = new Variant_Question;
-						$var->question_id = $question->id;
-						$var->description = $v;
-						$var->save();
-					}
+				foreach ($variants[$i] as $v) {
+					$var = new Variant_Question;
+					$var->question_id = $question->id;
+					$var->description = $v;
+					$var->save();
 				}
 			}
 		}
@@ -130,17 +128,7 @@ class QuestionsController extends Controller
 
 	public function delete($question_id)
 	{
-		$question = Question::findOrFail($question_id);
-		if($question->type == 2)
-		{
-			$variants = Variant_Question::where('question_id', $question->id)->get();
-			foreach ($variants as $variant)
-			{
-				$variant->delete();
-			}
-		}
-		$test_id = $question->test_id;
-		$question->delete();
-		return redirect("/admin_panel/tests/questions/$test_id");
+		Question::destroy($question_id);
+		return redirect()->back();
 	}
 }

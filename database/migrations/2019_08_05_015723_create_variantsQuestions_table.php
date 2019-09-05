@@ -14,6 +14,7 @@ class CreateVariantsQuestionsTable extends Migration
     public function up()
     {
         Schema::create('variant__questions', function (Blueprint $table) {
+			$table->increments('id');
             $table->unsignedInteger('question_id');
             $table->string('description', '1000');
         });

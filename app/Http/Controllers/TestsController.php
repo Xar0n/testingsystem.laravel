@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\RedirectToResult;
 use App\Performed_Test;
 use App\Result;
 use App\Scheduled_Test;

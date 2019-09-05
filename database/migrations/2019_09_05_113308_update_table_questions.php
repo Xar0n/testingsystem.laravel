@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateUsersTable extends Migration
+class UpdateTableQuestions extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class UpdateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('login')->unique()->change();
+        Schema::table('questions', function (Blueprint $table) {
+			$table->foreign('test_id')->references('id')->on('tests')->onDelete('cascade');
         });
     }
 
@@ -25,8 +25,8 @@ class UpdateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-			$table->string('login')->change();
+        Schema::table('questions', function (Blueprint $table) {
+			$table->dropForeign('questions_test_id_foreign');
         });
     }
 }

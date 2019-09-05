@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\CheckId;
 use App\Http\Requests\CheckTest;
+use App\Question;
 use App\Test;
 
 class TestsController extends GeneralController
@@ -52,8 +53,7 @@ class TestsController extends GeneralController
 
 	public function delete($test_id)
 	{
-		$test = Test::findOrFail($test_id);
-		$test->delete();
+		Test::destroy($test_id);
 		return redirect()->back();
 	}
 }

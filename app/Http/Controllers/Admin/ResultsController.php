@@ -82,16 +82,7 @@ class ResultsController extends Controller
 
 	public function delete($result_id)
 	{
-		$result = Result::findOrFail($result_id);
-		$scheduled_test_id = $result->scheduled_test_id;
-		$performed_test = Performed_Test::where([['user_id', $result->user_id], ['scheduled_test_id', $scheduled_test_id]]);
-		$result_questions = Result_Question::where('result_id', $result->id)->get();
-		foreach ($result_questions as $result_question)
-		{
-			$result_question->delete();
-		}
-		$result->delete();
-		$performed_test->delete();
+		Result::destroy($result_id);
 		return redirect()->to('/admin_panel/groups');
 	}
 }
