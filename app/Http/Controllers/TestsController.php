@@ -38,8 +38,7 @@ class TestsController extends Controller
 		$date = $dt->format('Y-m-d H:i:s');
 		if (date($date) < Carbon::now())
 		{
-			echo 'Время истекло';
-			abort(404);
+			return false;
 		} else {
 			$diff = Carbon::createFromTimeString($date)->diff(Carbon::now());
 			return $diff;
@@ -77,6 +76,10 @@ class TestsController extends Controller
 		}
 		$time = $this->allow($test_s);
 		$test = Test::findOrFail($test_s->test_id);
+		if (!$time)
+		{
+			return view('errors.timeisup', ['test' => $test]);
+		}
 		$questions = Question::where('test_id', $test->id)->get();
 		$variants = [];
 		foreach ($questions as $question) {

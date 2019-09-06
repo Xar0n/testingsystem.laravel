@@ -24,7 +24,7 @@ class FinishTest extends FormRequest
     public function rules()
     {
         return [
-            "answers.*" => "max:500",
+            "answers.*" => "max:1000",
         ];
     }
 

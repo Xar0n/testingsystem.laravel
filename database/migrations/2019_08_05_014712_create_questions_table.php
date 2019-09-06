@@ -19,7 +19,7 @@ class CreateQuestionsTable extends Migration
             $table->string('true_answer', 1000);
             $table->unsignedInteger('test_id');
             $table->tinyInteger('type');
-            $table->tinyInteger('points');
+            $table->tinyInteger('points')->default(1);
         });
     }
 
