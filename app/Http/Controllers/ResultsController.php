@@ -83,4 +83,9 @@ class ResultsController extends Controller
 		}
 			return view('result', ['points' => $points, 'points_total' => $points_total, 'test' => $test]);
 	}
+
+	public function getResults()
+	{
+
+	}
 }

@@ -26,9 +26,9 @@ class AllowTest
 		$group_id = Auth::user()->group_id;
 		if($group_id == $test_s->group_id) {
 			if($test_s->date_first > Carbon::now()) {
-				abort(404);
+				abort(531);
 			} elseif($test_s->date_last < Carbon::now()) {
-				abort(404);
+				abort(530);
 			}
 			$request->session()->push('test_s.id', $test_s->id);
 		}

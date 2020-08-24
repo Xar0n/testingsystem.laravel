@@ -18,10 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 Route::group(['middleware' => 'auth'], function () {
 	Route::group(['middleware' => 'deleteTestSId'], function () {
 		Route::get('/', 'TestsController@index');
-		Route::get('/profile', function () {
-			return view('profile');
-		});
-	});
+		Route::get('/profile', 'ResultsController@getResults');
+});
 	Route::group(['middleware' => 'allowTest'], function () {
 		Route::get('/test/{test_s}/', 'TestsController@show');
 		Route::match(['get', 'post'],'/test/do/{test_s}/', 'TestsController@run');

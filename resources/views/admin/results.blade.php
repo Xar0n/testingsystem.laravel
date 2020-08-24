@@ -25,9 +25,11 @@
                 </thead>
                 <tbody>
                 @if(isset($results[0]))
+                <?php $i = 0 ?>
                 @foreach($results as $result)
                 <tr>
-                    <th scope="row">{{ $result->id }}</th>
+                    <?php $i++ ?>
+                    <th scope="row">{{ $i }}</th>
                     <td>{{ $result->user_login }}</td>
                     <td>{{ $result->date }}</td>
                     <td>{{ $result->points }}</td>

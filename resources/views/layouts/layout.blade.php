@@ -20,7 +20,7 @@
                 @if (!Auth::guest())
                 <li class="nav-item dropdown">
                     <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        {{ Auth::user()->name }}</a>
+                        {{ Auth::user()->login }}</a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="bd-versions">
                         <a class="dropdown-item " href="{{ url('/logout') }}"
                            onclick="event.preventDefault();
@@ -46,9 +46,6 @@
         <span class="text-muted">Нашли ошибку? Напишите на email: toni.neczvetaev.06@bk.ru</span>
     </div>
 </footer>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script>window.jQuery || document.write('<script src="{{ url('/js/jquery-slim.min.js')}}"><\/script>')</script><script src="{{ url('/bootstrap/js/bootstrap.bundle.min.js') }}" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
-
-
+<script src="{{ url('/bootstrap/js/bootstrap.bundle.min.js') }}" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
 </body>
 </html>
