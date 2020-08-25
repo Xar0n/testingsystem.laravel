@@ -43,7 +43,7 @@
 </main>
 <footer class="footer mt-auto py-3">
     <div class="container">
-        <span class="text-muted">Нашли ошибку? Напишите на email: toni.neczvetaev.06@bk.ru</span>
+        <span class="text-muted"></span>
     </div>
 </footer>
 <script src="{{ url('/bootstrap/js/bootstrap.bundle.min.js') }}" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>

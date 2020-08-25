@@ -8,7 +8,7 @@
     $date_last = $datetime2->format('Y-m-d');
     $time_last = $datetime2->format('H:i');
     $datetime3 = new DateTime($test_s->time);
-    $time = $datetime2->format('H:i');
+    $time = $datetime3->format('H:i');
 ?>
 <div class="col-lg-12">
 	<div class="card">
