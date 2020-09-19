@@ -35,7 +35,6 @@
     </ul>
     @endif
     <p class="mt-3 lead">Оставшееся время: <span id="time"></span></p>
-    <p class="mt-3 lead">Текущее время: {{ Carbon\Carbon::now() }}</p>
     <hr>
     <div class="col-sm-5">
 	<form action="{{ url('/result') }}" method="post" id="formAnswers" name="formAnswers">

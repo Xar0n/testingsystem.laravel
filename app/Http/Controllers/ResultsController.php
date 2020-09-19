@@ -22,8 +22,8 @@ class ResultsController extends Controller
 		$parts[1] = (int)$parts[1] + 1;
 		$interval = new \DateInterval('PT' . (int)$parts[0] . 'H' . $parts[1] . 'M' . $parts[2] . 'S');
 		$dt->add($interval);
-		$date = $dt->format('Y-m-d H:i:s');
-		if (date($date) < Carbon::now())
+		$date = $dt->format('Y-m-d H:i:s'); //ИСПРАВИТЬ
+		if (date($date) < (Carbon::now() + ($test_s->time -  $p_test->data_time)))
 		{
 			echo 'Время истекло';
 			abort(404);
@@ -60,7 +60,7 @@ class ResultsController extends Controller
 		foreach ($questions as $question)
 		{
 			$points_total = $points_total + $question->points;
-			echo 'Вопрос:'.$question->true_answer.'. Ответ:'.$request->input('answers.'.$question->id).PHP_EOL;
+			//echo 'Вопрос:'.$question->true_answer.'. Ответ:'.$request->input('answers.'.$question->id).PHP_EOL;
 			if (mb_strtolower($question->true_answer) == mb_strtolower($request->input('answers.'.$question->id)))
 			{
 				$points = $points + $question->points;
